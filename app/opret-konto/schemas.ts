@@ -3,9 +3,9 @@ import { emailSchema, passwordSchema } from "@/plugins/form/schemas";
 
 export const technicalDataSignupSchema = z
   .object({
-    email: emailSchema(),
-    password: passwordSchema(),
-    password2: passwordSchema(),
+    email: emailSchema,
+    password: passwordSchema,
+    password2: passwordSchema,
     translations: z.object({
       aVerificationCodeHasBeenSentToYourEmail: z.string(),
     }),

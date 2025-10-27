@@ -6,6 +6,20 @@ import { SignJWT, jwtVerify } from "jose";
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { COOKIES } from "@/lib/constants/cookies";
+import { UnverifiedError } from "@/lib/errors";
+
+function isLoginUnverifiedErrorResponse(
+  data: unknown
+): data is { error: string; uuid: string } {
+  return (
+    typeof data === "object" &&
+    data !== null &&
+    "error" in data &&
+    "uuid" in data &&
+    typeof (data as Record<string, unknown>).error === "string" &&
+    typeof (data as Record<string, unknown>).uuid === "string"
+  );
+}
 
 export const { auth, signIn, handlers, unstable_update } = NextAuth({
   pages: {
@@ -29,13 +43,20 @@ export const { auth, signIn, handlers, unstable_update } = NextAuth({
           return null;
         }
 
-        type LoginResponse = (User & { jwtToken: string }) | null;
+        type LoginResponse =
+          | (User & { jwtToken: string })
+          | { error: string; uuid: string }
+          | null;
 
         const response = await api.post<LoginResponse>("/users/login/", {
           encryptedFields,
         });
 
         const data = response.data;
+
+        if (isLoginUnverifiedErrorResponse(data)) {
+          throw new UnverifiedError(data.uuid, "UnverifiedError", data.error);
+        }
 
         if (!data || !data.isActive || !data.jwtToken) {
           return null;

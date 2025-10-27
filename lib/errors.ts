@@ -11,3 +11,14 @@ export class LoginError extends Error {
     this.name = "LoginError";
   }
 }
+
+export class UnverifiedError extends Error {
+  constructor(
+    public uuid: string,
+    public error: string = "UnverifiedError",
+    message = "Unverified account"
+  ) {
+    super(message);
+    this.name = "UnverifiedError";
+  }
+}

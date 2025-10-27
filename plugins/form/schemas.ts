@@ -1,16 +1,15 @@
 import { z } from "zod/v3";
 
-export const emailSchema = () => z.string().email({ message: "Invalid email" });
+export const emailSchema = z.string().email({ message: "Invalid email" });
 
-export const passwordSchema = () =>
-  z
-    .string()
-    .min(8, { message: "Password må være minst 8 tegn" })
-    .max(100, { message: "Password må ikke overstige 100 tegn" })
-    .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/, {
-      message:
-        "Password skal indeholde mindst et stort bogstav, et lille bogstav og et tal",
-    });
+export const passwordSchema = z
+  .string()
+  .min(8, { message: "Password må være minst 8 tegn" })
+  .max(100, { message: "Password må ikke overstige 100 tegn" })
+  .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/, {
+    message:
+      "Password skal indeholde mindst et stort bogstav, et lille bogstav og et tal",
+  });
 
 export const postalCodeSchema = z
   .string()

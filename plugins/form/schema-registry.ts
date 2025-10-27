@@ -1,5 +1,5 @@
-import { loginSchema } from "@/app/login/schemas";
-import { technicalDataSignupSchema } from "@/app/signup/schemas";
+import { loginSchema } from "@/app/log-ind/schemas";
+import { technicalDataSignupSchema } from "@/app/opret-konto/schemas";
 
 export const schemaMap = {
   login: loginSchema,
