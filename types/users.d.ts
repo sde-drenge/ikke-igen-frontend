@@ -4,5 +4,7 @@ interface User {
   firstName: string;
   lastName: string;
   isActive: boolean;
+  phoneNumber: string | null;
+  profileColor: string;
   createdAt: string;
 }

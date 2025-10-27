@@ -62,6 +62,7 @@ export const { auth, signIn, handlers, unstable_update } = NextAuth({
           email: data.email,
           name: data.firstName + " " + data.lastName,
           isActive: data.isActive,
+          profileColor: data.profileColor,
           user_id: decryptedJwtToken.user_id,
           token: decryptedJwtToken.token,
         };
@@ -102,6 +103,7 @@ export const { auth, signIn, handlers, unstable_update } = NextAuth({
         token.user_id = user.user_id;
         token.isActive = user.isActive;
         token.email = user.email;
+        token.profileColor = user.profileColor;
         token.token = user.token;
       }
 
@@ -109,6 +111,7 @@ export const { auth, signIn, handlers, unstable_update } = NextAuth({
         token.name = session?.user?.name || token.name;
         token.email = session?.user?.email || token.email;
         token.isActive = session?.user?.isActive || token.isActive;
+        token.profileColor = session?.user?.profileColor || token.profileColor;
       }
 
       return token;
@@ -121,6 +124,7 @@ export const { auth, signIn, handlers, unstable_update } = NextAuth({
           uuid: token.uuid as string,
           email: token.email as string,
           isActive: token.isActive as boolean,
+          profileColor: token.profileColor as string,
         },
       };
     },
