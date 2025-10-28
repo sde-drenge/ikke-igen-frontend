@@ -1,8 +1,15 @@
+"use client";
+
+import { Skeleton } from "@/components/ui/skeleton";
 import { ROUTES } from "@/lib/constants/routes";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
+import initials from "initials";
 import Link from "next/link";
 
 export default function Header() {
+  const session = useSession();
+
   return (
     <>
       <header
@@ -28,12 +35,39 @@ export default function Header() {
               Skriv en anmeldelse
             </Link>
 
-            <Link
-              href={ROUTES.LOGIN}
-              className="text-background hover:text-primary font-medium transition"
-            >
-              Log ind
-            </Link>
+            {session.status === "authenticated" ? (
+              <div className="flex items-center gap-2">
+                <span className="whitespace-nowrap text-background">
+                  {session.data.user.name}
+                </span>
+
+                {session.data.user.image ? (
+                  <Image
+                    src={session.data.user.image}
+                    alt="Profil billede"
+                    width={32}
+                    height={32}
+                    className="size-8 rounded-full"
+                  />
+                ) : (
+                  <div
+                    style={{ backgroundColor: session.data.user.profileColor }}
+                    className="text-primary-foreground flex size-8 items-center justify-center rounded-full text-sm font-medium"
+                  >
+                    {initials(session.data.user.name!)}
+                  </div>
+                )}
+              </div>
+            ) : session.status === "loading" ? (
+              <Skeleton className="h-8 w-28" />
+            ) : (
+              <Link
+                href={ROUTES.LOGIN}
+                className="text-background hover:text-primary font-medium transition"
+              >
+                Log ind
+              </Link>
+            )}
           </div>
         </nav>
       </header>
