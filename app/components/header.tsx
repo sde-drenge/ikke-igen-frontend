@@ -6,9 +6,26 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import initials from "initials";
 import Link from "next/link";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { LogOutIcon } from "lucide-react";
+import { signOut } from "next-auth/react";
+
+import { useRouter } from "next/navigation";
 
 export default function Header() {
   const session = useSession();
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    await signOut({ redirect: false });
+
+    router.replace(ROUTES.LOGIN);
+  };
 
   return (
     <>
@@ -28,38 +45,43 @@ export default function Header() {
           </div>
 
           <div className="col-span-6 hidden items-center justify-end space-x-8 text-sm md:flex md:text-base">
-            <Link
-              href={ROUTES.WRITE_A_REVIEW}
-              className="text-background hover:text-primary font-medium transition"
-            >
-              Skriv en anmeldelse
-            </Link>
-
             {session.status === "authenticated" ? (
-              <div className="flex items-center gap-2">
-                <span className="whitespace-nowrap text-background">
-                  {session.data.user.name}
-                </span>
+              <DropdownMenu>
+                <DropdownMenuTrigger className="flex items-center gap-2 cursor-pointer">
+                  <span className="whitespace-nowrap text-background">
+                    {session.data.user.name}
+                  </span>
 
-                {session.data.user.image ? (
-                  <Image
-                    src={session.data.user.image}
-                    alt="Profil billede"
-                    width={32}
-                    height={32}
-                    className="size-8 rounded-full"
-                  />
-                ) : (
-                  <div
-                    style={{ backgroundColor: session.data.user.profileColor }}
-                    className="text-primary-foreground flex size-8 items-center justify-center rounded-full text-sm font-medium"
-                  >
-                    {initials(session.data.user.name!)}
-                  </div>
-                )}
-              </div>
+                  {session.data.user.image ? (
+                    <Image
+                      src={session.data.user.image}
+                      alt="Profil billede"
+                      width={32}
+                      height={32}
+                      className="size-8 rounded-full"
+                    />
+                  ) : (
+                    <div
+                      style={{
+                        backgroundColor: session.data.user.profileColor,
+                      }}
+                      className="text-primary-foreground flex size-8 items-center justify-center rounded-full text-sm font-medium"
+                    >
+                      {initials(session.data.user.name!)}
+                    </div>
+                  )}
+                </DropdownMenuTrigger>
+
+                <DropdownMenuContent>
+                  <DropdownMenuItem onClick={handleLogout}>
+                    <LogOutIcon />
+
+                    <span>Log ud</span>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             ) : session.status === "loading" ? (
-              <Skeleton className="h-8 w-28" />
+              <Skeleton className="h-8 w-31" />
             ) : (
               <Link
                 href={ROUTES.LOGIN}
