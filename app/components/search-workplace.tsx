@@ -120,6 +120,8 @@ export default function SearchWorkplace() {
                   {workplace.website && (
                     <div className="text-sm text-muted-foreground">
                       <span>{cleanDomain(workplace.website)}</span>
+                      <span className="mx-1">•</span>
+                      <span>{workplace.amountOfReviews} anmeldelser</span>
                     </div>
                   )}
                 </div>
