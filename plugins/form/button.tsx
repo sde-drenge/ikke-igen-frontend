@@ -37,7 +37,7 @@ export const Button: React.FC<ButtonProperties> = ({
       style={{
         opacity: isSubmitting ? "0.5" : "1",
       }}
-      className={cn("gap-1.5", className)}
+      className={cn("gap-1.5 cursor-pointer", className)}
     >
       {isSubmitting && <Spinner />}
 

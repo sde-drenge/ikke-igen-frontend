@@ -18,13 +18,13 @@ interface APIErrorResponse {
 export function shapeError(error: unknown): ShapedError {
   const defaultError = {
     status: 500,
-    error: "Something went wrong",
+    error: "Noget gik galt",
   };
 
   if (!error || typeof error !== "object") return defaultError;
 
   if (error instanceof RateLimitError) {
-    return { status: 429, error: "Please try again later" };
+    return { status: 429, error: "Prøv venligst igen senere" };
   }
 
   const apiError = error as APIErrorResponse;
