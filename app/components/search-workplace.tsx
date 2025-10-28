@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { SearchIcon, StarIcon } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import debounce from "lodash.debounce";
 import axios from "axios";
 import { cn } from "@/lib/utils";
@@ -13,6 +13,7 @@ import { ROUTES } from "@/lib/constants/routes";
 export default function SearchWorkplace() {
   const [query, setQuery] = useState<string>("");
   const [results, setResults] = useState<Workplace[]>([]);
+  const [isInputFocused, setIsInputFocused] = useState<boolean>(false);
 
   const handleSearch = useMemo(
     () =>
@@ -28,7 +29,7 @@ export default function SearchWorkplace() {
           );
 
           const results = response.data.results;
-
+          console.log(results);
           setResults(results);
 
           if (results.length > 0) {
@@ -78,11 +79,14 @@ export default function SearchWorkplace() {
             setQuery(e.target.value);
             handleSearch(e.target.value);
           }}
+          onFocus={() => setIsInputFocused(true)}
+          onBlur={() => setIsInputFocused(false)}
           placeholder="Søg efter en læreplads"
           className={cn(
             "pl-6 pr-15 h-16 bg-background shadow-lg rounded-4xl md:text-base transition-none ring-0! border-border!",
             results.length > 0 &&
-              "group-hover:rounded-b-none group-hover:shadow-none"
+              "group-hover:rounded-b-none group-hover:shadow-none",
+            isInputFocused && results.length > 0 && "rounded-b-none shadow-none"
           )}
         />
         <Button
@@ -94,7 +98,12 @@ export default function SearchWorkplace() {
       </div>
 
       {results.length > 0 && (
-        <div className="pt-3 bg-background hidden border-x border-b group-hover:block rounded-b-4xl overflow-hidden pb-6">
+        <div
+          className={cn(
+            "pt-3 bg-background hidden border-x border-b group-hover:block rounded-b-4xl overflow-hidden pb-6",
+            isInputFocused && "block"
+          )}
+        >
           <h4 className="px-6 py-2 text-xs">Lærepladser</h4>
 
           {results.map((workplace) => {
