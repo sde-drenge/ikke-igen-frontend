@@ -99,7 +99,7 @@ export function Control<
               {label}
 
               {required && (
-                <span className="form-required text-destructive ml-1">*</span>
+                <span className="form-required text-destructive">*</span>
               )}
             </FormLabel>
           )}
