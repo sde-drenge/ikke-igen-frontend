@@ -6,5 +6,8 @@ interface User {
   isActive: boolean;
   phoneNumber: string | null;
   profileColor: string;
+  role: "student" | "teacher";
   createdAt: string;
 }
+
+type LightUser = Omit<User, "createdAt" | "isActive" | "phoneNumber">;

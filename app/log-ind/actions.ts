@@ -3,7 +3,7 @@
 import { withDecryptionAndValidation } from "@/plugins/form/validation/with-decryption";
 
 import { ROUTES } from "@/lib/constants/routes";
-import { signIn } from "@/services/auth";
+import { auth, signIn } from "@/services/auth";
 
 import { loginSchema } from "./schemas";
 
@@ -76,10 +76,15 @@ export const loginAction = withDecryptionAndValidation(
       };
     }
 
-    if (!result || result?.error) {
+    const session = await auth();
+
+    if (!result || result?.error || !session?.user) {
       return { error: "Forkert email eller adgangskode", status: 401 };
     }
 
-    return { success: "Du er nu logget ind", status: 200 };
+    const redirect =
+      session.user.role === "teacher" ? ROUTES.VERIFY_REVIEWS : undefined;
+
+    return { success: "Du er nu logget ind", status: 200, redirect };
   }
 );

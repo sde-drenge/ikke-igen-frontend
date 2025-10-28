@@ -6,6 +6,7 @@ declare module "next-auth" {
     user_id: number;
     email: string;
     isActive: boolean;
+    role: "student" | "teacher";
     profileColor: string;
     token: string;
   }
