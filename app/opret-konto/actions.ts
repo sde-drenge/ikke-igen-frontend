@@ -37,7 +37,7 @@ export const technicalDataSignupAction = withDecryptionAndValidation(
       status: 200,
       redirect: redirectTo,
     };
-  },
+  }
 );
 
 export const verificationsCodeSignupAction = withValidation(
@@ -110,7 +110,7 @@ export const verificationsCodeSignupAction = withValidation(
     };
   },
   {
-    requireAuth: false
+    requireAuth: false,
   }
 );
 

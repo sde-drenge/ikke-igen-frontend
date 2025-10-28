@@ -34,4 +34,6 @@ export const updateProfileSignupSchema = z.object({
     .min(1, "Ugyldigt efternavn")
     .max(64, "Kan ikke være længere end 64 tegn"),
   phoneNumber: z.string().optional(),
+  schoolUuid: objectIdSchema,
+  education: z.string().min(1, "Påkrævet"),
 });

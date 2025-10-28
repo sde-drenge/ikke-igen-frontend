@@ -1,6 +1,8 @@
 import { Button, Control, Form } from "@/plugins/form";
 import PhoneControl from "@/plugins/form/controls/phone";
 import { updateProfileSignupAction } from "../actions";
+import SelectSchool from "./select-school";
+import SelectEducation from "./select-education";
 
 export default function UpdateProfileForm() {
   return (
@@ -34,6 +36,10 @@ export default function UpdateProfileForm() {
           label="Telefonnummer"
           inputClassName="flex-1 bg-transparent! border-input! text-foreground!"
         />
+
+        <SelectSchool />
+
+        <SelectEducation />
 
         <Button
           text="Opret"
