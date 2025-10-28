@@ -49,7 +49,7 @@ export default function SelectEducation() {
         }
 
         setIsLoading(false);
-      }, 500),
+      }, 250),
     []
   );
 

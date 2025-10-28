@@ -38,7 +38,7 @@ export default function SearchWorkplace() {
         } catch (err) {
           console.log("error", err);
         }
-      }, 500),
+      }, 250),
     []
   );
 

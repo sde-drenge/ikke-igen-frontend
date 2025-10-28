@@ -47,7 +47,7 @@ export default function SelectSchool() {
         }
 
         setIsLoading(false);
-      }, 500),
+      }, 250),
     []
   );
 
