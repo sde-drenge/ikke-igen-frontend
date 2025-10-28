@@ -4,6 +4,7 @@ interface Workplace {
   vat: string;
   website: string;
   stars: string;
+  amountOfReviews: number;
   createdAt: string;
   updatedAt: string;
 }
