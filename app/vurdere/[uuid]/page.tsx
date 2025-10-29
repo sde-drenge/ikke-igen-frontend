@@ -16,7 +16,7 @@ export default async function page({ params }: PageProps) {
   const [{ uuid }, session] = await Promise.all([params, auth()]);
 
   if (!session) {
-    redirect("/login?redirect=" + ROUTES.EVALUATE(uuid));
+    redirect(ROUTES.LOGIN + "?redirect=" + ROUTES.EVALUATE(uuid));
   }
 
   const { data } = await safeGet<Workplace>(`/workplaces/${uuid}/`);
@@ -39,6 +39,7 @@ export default async function page({ params }: PageProps) {
           context={{
             workplaceUuid: uuid,
           }}
+          redirect={ROUTES.REVIEW(uuid)}
           onSubmit={createReviewAction}
           className="w-full px-8 space-y-6"
         >

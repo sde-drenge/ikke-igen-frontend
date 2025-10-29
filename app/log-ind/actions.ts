@@ -3,9 +3,13 @@
 import { withDecryptionAndValidation } from "@/plugins/form/validation/with-decryption";
 
 import { ROUTES } from "@/lib/constants/routes";
-import { auth, signIn } from "@/services/auth";
+import { signIn } from "@/services/auth";
 
 import { loginSchema } from "./schemas";
+import { cookies } from "next/headers";
+import { COOKIES } from "@/lib/constants/cookies";
+import { jwtVerify } from "jose";
+import { environment } from "@/config/environment";
 
 type SerializedUnverifiedError = {
   name: "UnverifiedError";
@@ -76,14 +80,23 @@ export const loginAction = withDecryptionAndValidation(
       };
     }
 
-    const session = await auth();
+    const cookiesList = await cookies();
+    const sessionCookie = cookiesList.get(COOKIES.SESSION_TOKEN.name);
 
-    if (!result || result?.error || !session?.user) {
+    if (!result || result?.error || !sessionCookie) {
       return { error: "Forkert email eller adgangskode", status: 401 };
     }
 
+    const { payload } = await jwtVerify<User>(
+      sessionCookie.value!,
+      new TextEncoder().encode(environment.SECRET_KEY as string),
+      {
+        algorithms: ["HS256"],
+      }
+    );
+
     const redirect =
-      session.user.role === "teacher" ? ROUTES.VERIFY_REVIEWS : undefined;
+      payload.role === "teacher" ? ROUTES.VERIFY_REVIEWS : undefined;
 
     return { success: "Du er nu logget ind", status: 200, redirect };
   }

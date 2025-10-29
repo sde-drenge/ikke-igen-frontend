@@ -191,7 +191,7 @@ export const Form = <
         toast.success(response.success);
       }
 
-      const redirectUrl = response.redirect || redirect;
+      const redirectUrl = redirect || response.redirect;
 
       if (multiStep) {
         if (currentStep < totalSteps - 1) {

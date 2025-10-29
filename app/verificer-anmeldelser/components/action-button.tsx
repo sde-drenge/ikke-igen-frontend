@@ -20,20 +20,20 @@ export default function ActionButton({ reviewUuid }: ActionButtonProps) {
   };
 
   return (
-    <div className="flex items-center gap-x-2">
+    <div className="flex items-center gap-x-2 mt-auto">
+      <Button
+        variant="outline"
+        onClick={() => handleReview(false)}
+        className="rounded-full mt-auto cursor-pointer w-fit"
+      >
+        Afvis
+      </Button>
+
       <Button
         onClick={() => handleReview(true)}
         className="rounded-full mt-auto cursor-pointer w-fit"
       >
         Verificer
-      </Button>
-
-      <Button
-        variant="destructive"
-        onClick={() => handleReview(false)}
-        className="rounded-full mt-auto cursor-pointer w-fit"
-      >
-        Afvis
       </Button>
     </div>
   );

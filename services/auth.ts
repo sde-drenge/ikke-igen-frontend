@@ -148,7 +148,7 @@ export const { auth, signIn, handlers, unstable_update } = NextAuth({
           email: token.email as string,
           isActive: token.isActive as boolean,
           profileColor: token.profileColor as string,
-          role: token.role as Roles,
+          role: token.role as User["role"],
         },
       };
     },
