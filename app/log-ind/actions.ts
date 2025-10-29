@@ -96,7 +96,9 @@ export const loginAction = withDecryptionAndValidation(
     );
 
     const redirect =
-      payload.role === "teacher" ? ROUTES.VERIFY_REVIEWS : undefined;
+      payload.role === "teacher" || payload.role === "teacher-admin"
+        ? ROUTES.VERIFY_REVIEWS
+        : undefined;
 
     return { success: "Du er nu logget ind", status: 200, redirect };
   }

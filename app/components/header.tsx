@@ -33,23 +33,24 @@ export default async function Header() {
           <div className="col-span-6 hidden items-center justify-end space-x-8 text-sm md:flex md:text-base">
             {session?.user ? (
               <>
-                {session.user.role === "teacher" && (
-                  <>
-                    <Link
-                      href={ROUTES.VERIFY_REVIEWS}
-                      className="text-background hover:text-primary font-medium transition"
-                    >
-                      Verificer anmeldelser
-                    </Link>
+                {session.user.role === "teacher" ||
+                  (session.user.role === "teacher-admin" && (
+                    <>
+                      <Link
+                        href={ROUTES.VERIFY_REVIEWS}
+                        className="text-background hover:text-primary font-medium transition"
+                      >
+                        Verificer anmeldelser
+                      </Link>
 
-                    <Link
-                      href={ROUTES.SCHOOL_WORKERS}
-                      className="text-background hover:text-primary font-medium transition"
-                    >
-                      Lærer
-                    </Link>
-                  </>
-                )}
+                      <Link
+                        href={ROUTES.SCHOOL_WORKERS}
+                        className="text-background hover:text-primary font-medium transition"
+                      >
+                        Lærer
+                      </Link>
+                    </>
+                  ))}
 
                 <DropdownMenu>
                   <DropdownMenuTrigger className="flex items-center gap-2 cursor-pointer">
