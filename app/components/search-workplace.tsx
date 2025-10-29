@@ -3,12 +3,13 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { SearchIcon, StarIcon } from "lucide-react";
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useState } from "react";
 import debounce from "lodash.debounce";
 import axios from "axios";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { ROUTES } from "@/lib/constants/routes";
+import { starColors } from "@/utils/stars";
 
 export default function SearchWorkplace() {
   const [query, setQuery] = useState<string>("");
@@ -49,29 +50,8 @@ export default function SearchWorkplace() {
       .replace(/\/$/, "");
   };
 
-  const starColors = (
-    stars: number
-  ): {
-    star: string;
-    background: string;
-  } => {
-    if (stars >= 4) {
-      return { star: "bg-green-400", background: "bg-green-200" };
-    }
-
-    if (stars >= 3) {
-      return { star: "bg-yellow-400", background: "bg-yellow-200" };
-    }
-
-    if (stars >= 2) {
-      return { star: "bg-orange-400", background: "bg-orange-200" };
-    }
-
-    return { star: "bg-gray-400", background: "bg-gray-200" };
-  };
-
   return (
-    <div className="mx-13.5 mt-10 group">
+    <div className="mx-13.5 mt-10 group relative">
       <div className="relative">
         <Input
           value={query}
@@ -100,7 +80,7 @@ export default function SearchWorkplace() {
       {results.length > 0 && (
         <div
           className={cn(
-            "pt-3 bg-background hidden border-x border-b group-hover:block rounded-b-4xl overflow-hidden pb-6",
+            "pt-3 bg-background hidden absolute top-16 left-0 w-full border-x border-b group-hover:block rounded-b-4xl overflow-hidden pb-6",
             isInputFocused && "block"
           )}
         >

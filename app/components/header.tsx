@@ -1,31 +1,17 @@
-"use client";
-
-import { Skeleton } from "@/components/ui/skeleton";
 import { ROUTES } from "@/lib/constants/routes";
-import { useSession } from "next-auth/react";
 import Image from "next/image";
 import initials from "initials";
 import Link from "next/link";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { LogOutIcon } from "lucide-react";
-import { signOut } from "next-auth/react";
+import LogoutItem from "./logout-item";
+import { auth } from "@/services/auth";
 
-import { useRouter } from "next/navigation";
-
-export default function Header() {
-  const session = useSession();
-  const router = useRouter();
-
-  const handleLogout = async () => {
-    await signOut({ redirect: false });
-
-    router.replace(ROUTES.LOGIN);
-  };
+export default async function Header() {
+  const session = await auth();
 
   return (
     <>
@@ -45,50 +31,64 @@ export default function Header() {
           </div>
 
           <div className="col-span-6 hidden items-center justify-end space-x-8 text-sm md:flex md:text-base">
-            {session.status === "authenticated" ? (
-              <DropdownMenu>
-                <DropdownMenuTrigger className="flex items-center gap-2 cursor-pointer">
-                  <span className="whitespace-nowrap text-background">
-                    {session.data.user.name}
-                  </span>
+            {session?.user ? (
+              <>
+                {session.user.role === "teacher" && (
+                  <Link
+                    href={ROUTES.VERIFY_REVIEWS}
+                    className="text-background hover:text-primary font-medium transition"
+                  >
+                    Verificer anmeldelser
+                  </Link>
+                )}
 
-                  {session.data.user.image ? (
-                    <Image
-                      src={session.data.user.image}
-                      alt="Profil billede"
-                      width={32}
-                      height={32}
-                      className="size-8 rounded-full"
-                    />
-                  ) : (
-                    <div
-                      style={{
-                        backgroundColor: session.data.user.profileColor,
-                      }}
-                      className="text-primary-foreground flex size-8 items-center justify-center rounded-full text-sm font-medium"
-                    >
-                      {initials(session.data.user.name!)}
-                    </div>
-                  )}
-                </DropdownMenuTrigger>
+                <DropdownMenu>
+                  <DropdownMenuTrigger className="flex items-center gap-2 cursor-pointer">
+                    <span className="whitespace-nowrap text-background">
+                      {session.user.name}
+                    </span>
 
-                <DropdownMenuContent>
-                  <DropdownMenuItem onClick={handleLogout}>
-                    <LogOutIcon />
+                    {session.user.image ? (
+                      <Image
+                        src={session.user.image}
+                        alt="Profil billede"
+                        width={32}
+                        height={32}
+                        className="size-8 rounded-full"
+                      />
+                    ) : (
+                      <div
+                        style={{
+                          backgroundColor: session.user.profileColor,
+                        }}
+                        className="text-primary-foreground flex size-8 items-center justify-center rounded-full text-sm font-medium"
+                      >
+                        {initials(session.user.name!)}
+                      </div>
+                    )}
+                  </DropdownMenuTrigger>
 
-                    <span>Log ud</span>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            ) : session.status === "loading" ? (
-              <Skeleton className="h-8 w-31" />
+                  <DropdownMenuContent>
+                    <LogoutItem />
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </>
             ) : (
-              <Link
-                href={ROUTES.LOGIN}
-                className="text-background hover:text-primary font-medium transition"
-              >
-                Log ind
-              </Link>
+              <>
+                <Link
+                  href={ROUTES.LOGIN}
+                  className="text-background hover:text-primary font-medium transition"
+                >
+                  Log ind
+                </Link>
+
+                <Link
+                  href={ROUTES.SIGNUP}
+                  className="bg-primary hover:bg-secondary text-primary-foreground relative rounded-3xl px-6 py-3 transition-colors"
+                >
+                  For lærepladser
+                </Link>
+              </>
             )}
           </div>
         </nav>
