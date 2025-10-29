@@ -34,12 +34,21 @@ export default async function Header() {
             {session?.user ? (
               <>
                 {session.user.role === "teacher" && (
-                  <Link
-                    href={ROUTES.VERIFY_REVIEWS}
-                    className="text-background hover:text-primary font-medium transition"
-                  >
-                    Verificer anmeldelser
-                  </Link>
+                  <>
+                    <Link
+                      href={ROUTES.VERIFY_REVIEWS}
+                      className="text-background hover:text-primary font-medium transition"
+                    >
+                      Verificer anmeldelser
+                    </Link>
+
+                    <Link
+                      href={ROUTES.SCHOOL_WORKERS}
+                      className="text-background hover:text-primary font-medium transition"
+                    >
+                      Lærer
+                    </Link>
+                  </>
                 )}
 
                 <DropdownMenu>

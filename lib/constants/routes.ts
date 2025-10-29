@@ -6,4 +6,5 @@ export const ROUTES = {
   REVIEW: (uuid: Workplace["uuid"]) => `/anmeldelse/${uuid}`,
   EVALUATE: (uuid: Workplace["uuid"]) => `/vurdere/${uuid}`,
   VERIFY_REVIEWS: "/verificer-anmeldelser",
+  SCHOOL_WORKERS: "/skole-arbejdere",
 } as const;

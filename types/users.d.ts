@@ -6,8 +6,12 @@ interface User {
   isActive: boolean;
   phoneNumber: string | null;
   profileColor: string;
-  role: "student" | "teacher";
+  role: "student" | "teacher" | "teacher-admin";
   createdAt: string;
 }
 
 type LightUser = Omit<User, "createdAt" | "isActive" | "phoneNumber">;
+
+interface UserPagination extends Pagination {
+  results: LightUser[];
+}
