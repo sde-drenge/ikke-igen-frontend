@@ -95,10 +95,11 @@ export default function SearchWorkplace() {
                 href={ROUTES.REVIEW(workplace.uuid)}
                 className="px-6 py-3 hover:bg-primary/10 flex items-center h-16 justify-between"
               >
-                <div>
+                <div className="flex-1 min-w-0 pr-2">
                   <h4>{workplace.name}</h4>
+
                   {workplace.website && (
-                    <div className="text-sm text-muted-foreground">
+                    <div className="text-sm text-muted-foreground truncate">
                       <span>{cleanDomain(workplace.website)}</span>
                       <span className="mx-1">•</span>
                       <span>{workplace.amountOfReviews} anmeldelser</span>
