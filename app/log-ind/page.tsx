@@ -29,6 +29,7 @@ export default async function page({ searchParams }: PageProps) {
           encryptedFields={["email", "password"]}
           onSubmit={loginAction}
           redirect={redirect}
+          refresh
           className="w-full px-8"
         >
           <div className="mt-8 space-y-6">

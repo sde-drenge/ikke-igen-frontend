@@ -56,6 +56,7 @@ interface FormProperties {
   enctype?: string;
   idPrefix?: string;
   redirect?: string;
+  refresh?: boolean;
   style?: React.CSSProperties;
   className?: string;
   multiStep?: boolean;
@@ -83,6 +84,7 @@ export const Form = <
   enctype = "application/x-www-form-urlencoded",
   idPrefix,
   redirect,
+  refresh,
   style,
   className,
   multiStep = false,
@@ -203,7 +205,9 @@ export const Form = <
         router.push(redirectUrl);
       }
 
-      router.refresh();
+      if (refresh) {
+        router.refresh();
+      }
 
       if (!context) {
         methods.reset();
