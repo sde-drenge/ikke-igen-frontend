@@ -1,0 +1,13 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        BACKEND_PORT: 8000
+    image: frontend
+    env_file:
+      - .env
+    ports:
+      - '3000:3000'
+    restart: unless-stopped
