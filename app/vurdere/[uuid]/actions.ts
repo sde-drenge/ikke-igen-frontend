@@ -14,6 +14,10 @@ export const createReviewAction = withValidation(
       stars: rest.stars.toString(),
     });
 
-    return { success: "Anmeldelse er blevet oprettet!", status: 200 };
+    return {
+      success:
+        "Anmeldelsen er blevet oprettet, men den skal godkendes af en lærer først!",
+      status: 200,
+    };
   }
 );
