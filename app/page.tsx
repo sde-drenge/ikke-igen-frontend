@@ -1,9 +1,10 @@
 import TriggerFlash from "@/components/trigger-flash";
 import SearchWorkplace from "./components/search-workplace";
+import { Suspense } from "react";
 
 export default function Home() {
   return (
-    <>
+    <Suspense fallback={<></>}>
       <div className="min-h-116 border-b bg-accent flex">
         <div className="w-3xl mx-auto">
           <h1 className="text-5xl font-bold text-center mt-20 px-6">
@@ -19,6 +20,6 @@ export default function Home() {
       </div>
 
       <TriggerFlash />
-    </>
+    </Suspense>
   );
 }
