@@ -91,13 +91,6 @@ export default async function Header() {
                 >
                   Log ind
                 </Link>
-
-                <Link
-                  href={ROUTES.SIGNUP}
-                  className="bg-primary hover:bg-secondary text-primary-foreground relative rounded-3xl px-6 py-3 transition-colors"
-                >
-                  For lærepladser
-                </Link>
               </>
             )}
           </div>
