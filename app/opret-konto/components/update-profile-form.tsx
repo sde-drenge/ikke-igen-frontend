@@ -3,12 +3,14 @@ import PhoneControl from "@/plugins/form/controls/phone";
 import { updateProfileSignupAction } from "../actions";
 import SelectSchool from "./select-school";
 import SelectEducation from "./select-education";
+import { ROUTES } from "@/lib/constants/routes";
 
 export default function UpdateProfileForm() {
   return (
     <Form
       schemaKey="update-profile-signup"
       onSubmit={updateProfileSignupAction}
+      redirect={ROUTES.FRONTPAGE}
       className="w-full px-8"
     >
       <div className="mt-8 space-y-6">
