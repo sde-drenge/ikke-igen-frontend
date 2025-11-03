@@ -2,7 +2,7 @@ interface Workplace {
   uuid: string;
   name: string;
   vat: string;
-  website: string;
+  address: string;
   stars: string;
   amountOfReviews: number;
   createdAt: string;
@@ -11,4 +11,16 @@ interface Workplace {
 
 interface WorkplacePagination extends Pagination {
   results: Workplace[];
+}
+
+interface TopCategory {
+  uuid: string;
+  name: string;
+  color: string;
+  categories: Category[];
+}
+
+interface Category {
+  uuid: string;
+  name: string;
 }

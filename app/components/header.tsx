@@ -45,6 +45,13 @@ export default async function Header() {
           </div>
 
           <div className="col-span-6 hidden items-center justify-end space-x-8 text-sm md:flex md:text-base">
+            <Link
+              href={ROUTES.CATEGORIES}
+              className="text-background hover:text-primary font-medium transition"
+            >
+              Kategorier
+            </Link>
+
             {session?.user ? (
               <>
                 {(session.user.role === "teacher" ||

@@ -7,4 +7,6 @@ export const ROUTES = {
   EVALUATE: (uuid: Workplace["uuid"]) => `/vurdere/${uuid}`,
   VERIFY_REVIEWS: "/verificer-anmeldelser",
   SCHOOL_WORKERS: "/skole-arbejdere",
+  CATEGORIES: "/kategorier",
+  SPECIFIC_CATEGORY: (uuid: Category["uuid"]) => `${ROUTES.CATEGORIES}/${uuid}`,
 } as const;
