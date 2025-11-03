@@ -81,6 +81,7 @@ export const verificationsCodeSignupAction = withValidation(
       email: data.email,
       isActive: data.isActive,
       user_id: decryptedJwtToken.user_id,
+      role: data.role,
       token: decryptedJwtToken.token,
     })
       .setProtectedHeader({ alg: "HS256" })

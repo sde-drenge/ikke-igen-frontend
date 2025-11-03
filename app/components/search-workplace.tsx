@@ -58,13 +58,6 @@ export default function SearchWorkplace({ isMobile }: SearchWorkplaceProps) {
     setIsInputFocused(true);
   };
 
-  const cleanDomain = (domain: string) => {
-    return domain
-      .replace(/(^\w+:|^)\/\//, "")
-      .replace(/\/$/, "")
-      .replace(/\/$/, "");
-  };
-
   return (
     <div className="mx-13.5 mt-10 group relative">
       <div className="relative">
@@ -147,18 +140,25 @@ export default function SearchWorkplace({ isMobile }: SearchWorkplaceProps) {
                     <Link
                       key={workplace.uuid}
                       href={ROUTES.REVIEW(workplace.uuid)}
-                      className="px-6 py-3 hover:bg-primary/10 flex items-center h-16 justify-between"
+                      className="px-6 py-3 hover:bg-primary/10 flex items-center justify-between"
                     >
                       <div className="flex-1 min-w-0 pr-2">
                         <h4>{workplace.name}</h4>
 
-                        {workplace.website && (
-                          <div className="text-sm text-muted-foreground truncate">
-                            <span>{cleanDomain(workplace.website)}</span>
-                            <span className="mx-1">•</span>
-                            <span>{workplace.amountOfReviews} anmeldelser</span>
-                          </div>
-                        )}
+                        <div className="text-sm text-muted-foreground truncate">
+                          <span className="font-medium">
+                            {workplace.address}
+                          </span>
+
+                          {workplace.amountOfReviews ? (
+                            <>
+                              <span className="mx-2">•</span>
+                              <span>
+                                {workplace.amountOfReviews} anmeldelser
+                              </span>
+                            </>
+                          ) : null}
+                        </div>
                       </div>
 
                       <div
@@ -209,18 +209,21 @@ export default function SearchWorkplace({ isMobile }: SearchWorkplaceProps) {
               <Link
                 key={workplace.uuid}
                 href={ROUTES.REVIEW(workplace.uuid)}
-                className="px-6 py-3 hover:bg-primary/10 flex items-center h-16 justify-between"
+                className="px-6 py-3 hover:bg-primary/10 flex items-center justify-between"
               >
                 <div className="flex-1 min-w-0 pr-2">
                   <h4>{workplace.name}</h4>
 
-                  {workplace.website && (
-                    <div className="text-sm text-muted-foreground truncate">
-                      <span>{cleanDomain(workplace.website)}</span>
-                      <span className="mx-1">•</span>
-                      <span>{workplace.amountOfReviews} anmeldelser</span>
-                    </div>
-                  )}
+                  <div className="text-sm text-muted-foreground truncate">
+                    <span className="font-medium">{workplace.address}</span>
+
+                    {workplace.amountOfReviews ? (
+                      <>
+                        <span className="mx-2">•</span>
+                        <span>{workplace.amountOfReviews} anmeldelser</span>
+                      </>
+                    ) : null}
+                  </div>
                 </div>
 
                 <div

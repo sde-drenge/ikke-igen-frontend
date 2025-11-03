@@ -16,7 +16,7 @@ import { inviteTeacherAction } from "./actions";
 
 export default function page() {
   return (
-    <div className="flex-col md:flex max-w-6xl mx-auto py-10 px-6">
+    <div className="flex-col md:flex max-w-7xl mx-auto py-10 px-6">
       <div className="flex-1 space-y-6">
         <div>
           <h2 className="flex items-center space-x-2 text-3xl font-bold">
