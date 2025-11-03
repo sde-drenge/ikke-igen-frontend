@@ -16,7 +16,11 @@ export default async function page({ params }: PageProps) {
   const [{ uuid }, session] = await Promise.all([params, auth()]);
 
   if (!session) {
-    redirect(ROUTES.LOGIN + "?redirect=" + ROUTES.EVALUATE(uuid));
+    return redirect(ROUTES.LOGIN + "?redirect=" + ROUTES.EVALUATE(uuid));
+  }
+
+  if (session.user.role !== "student") {
+    return redirect(ROUTES.FRONTPAGE);
   }
 
   const { data } = await safeGet<Workplace>(`/workplaces/${uuid}/`);

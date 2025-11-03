@@ -2,6 +2,7 @@ import { Separator } from "@/components/ui/separator";
 import { safeGet } from "@/lib/api";
 import { ROUTES } from "@/lib/constants/routes";
 import { cn } from "@/lib/utils";
+import { auth } from "@/services/auth";
 import { starColors } from "@/utils/stars";
 import { ExternalLinkIcon, PenIcon, StarIcon } from "lucide-react";
 import Link from "next/link";
@@ -14,12 +15,14 @@ interface PageProps {
 export default async function page({ params }: PageProps) {
   const { uuid } = await params;
 
-  const [{ data: workplace }, { data: reviewsData }] = await Promise.all([
-    safeGet<Workplace>(`/workplaces/${uuid}/`),
-    safeGet<ReviewPagination>(`/workplaces/${uuid}/reviews/`),
-  ]);
+  const [{ data: workplace }, { data: reviewsData }, session] =
+    await Promise.all([
+      safeGet<Workplace>(`/workplaces/${uuid}/`),
+      safeGet<ReviewPagination>(`/workplaces/${uuid}/reviews/`),
+      auth(),
+    ]);
 
-  if (!workplace) {
+  if (!workplace || !session) {
     return notFound();
   }
 
@@ -54,13 +57,15 @@ export default async function page({ params }: PageProps) {
           </div>
         </div>
 
-        <Link
-          href={ROUTES.EVALUATE(workplace.uuid)}
-          className="rounded-full bg-primary text-primary-foreground h-9 px-4 py-2 has-[>svg]:px-3 hover:bg-primary/90 font-bold mt-3 inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 aria-invalid:border-destructive"
-        >
-          <PenIcon />
-          Skriv en anmeldelse
-        </Link>
+        {session.user.role === "student" && (
+          <Link
+            href={ROUTES.EVALUATE(workplace.uuid)}
+            className="rounded-full bg-primary text-primary-foreground h-9 px-4 py-2 has-[>svg]:px-3 hover:bg-primary/90 font-bold mt-3 inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 aria-invalid:border-destructive"
+          >
+            <PenIcon />
+            Skriv en anmeldelse
+          </Link>
+        )}
 
         {workplace.website && (
           <Link
