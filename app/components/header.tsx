@@ -9,6 +9,17 @@ import {
 } from "@/components/ui/dropdown-menu";
 import LogoutItem from "./logout-item";
 import { auth } from "@/services/auth";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { MenuIcon } from "lucide-react";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import { Separator } from "@/components/ui/separator";
 
 export default async function Header() {
   const session = await auth();
@@ -18,7 +29,7 @@ export default async function Header() {
       <header
         id="site-header"
         role="banner"
-        className="bg-foreground absolute top-0 left-0 z-10 w-full px-4"
+        className="bg-foreground absolute top-0 left-0 z-10 w-full px-4 flex"
       >
         <nav
           aria-label="Main navigation"
@@ -50,7 +61,7 @@ export default async function Header() {
                       href={ROUTES.SCHOOL_WORKERS}
                       className="text-background hover:text-primary font-medium transition"
                     >
-                      Lærer
+                      Lærere
                     </Link>
                   </>
                 )}
@@ -98,6 +109,98 @@ export default async function Header() {
             )}
           </div>
         </nav>
+
+        <Sheet>
+          <SheetTrigger aria-label="Åben menu" className="px-3 md:hidden">
+            <MenuIcon
+              size={32}
+              aria-hidden="true"
+              className="text-background"
+            />
+          </SheetTrigger>
+
+          <SheetContent side="right" className="w-1/2">
+            <SheetHeader className="text-left">
+              <VisuallyHidden>
+                <SheetTitle>Navigations menu</SheetTitle>
+              </VisuallyHidden>
+            </SheetHeader>
+
+            <nav
+              aria-label="Mobile navigation"
+              className="flex flex-col space-y-4"
+            >
+              {session?.user ? (
+                <>
+                  {(session.user.role === "teacher" ||
+                    session.user.role === "teacher-admin") && (
+                    <>
+                      <SheetClose asChild>
+                        <Link
+                          href={ROUTES.VERIFY_REVIEWS}
+                          className="text-foreground px-5 py-2 hover:text-primary font-medium transition"
+                        >
+                          Verificer anmeldelser
+                        </Link>
+                      </SheetClose>
+
+                      <SheetClose asChild>
+                        <Link
+                          href={ROUTES.SCHOOL_WORKERS}
+                          className="text-foreground px-5 py-2 hover:text-primary font-medium transition"
+                        >
+                          Lærere
+                        </Link>
+                      </SheetClose>
+
+                      <Separator />
+                    </>
+                  )}
+
+                  <DropdownMenu>
+                    <DropdownMenuTrigger className="flex items-center gap-2 px-5 w-fit py-2 cursor-pointer">
+                      <span className="whitespace-nowrap text-foreground">
+                        {session.user.name}
+                      </span>
+
+                      {session.user.image ? (
+                        <Image
+                          src={session.user.image}
+                          alt="Profil billede"
+                          width={32}
+                          height={32}
+                          className="size-8 rounded-full"
+                        />
+                      ) : (
+                        <div
+                          style={{
+                            backgroundColor: session.user.profileColor,
+                          }}
+                          className="text-primary-foreground flex size-8 items-center justify-center rounded-full text-sm font-medium"
+                        >
+                          {initials(session.user.name!)}
+                        </div>
+                      )}
+                    </DropdownMenuTrigger>
+
+                    <DropdownMenuContent>
+                      <LogoutItem />
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </>
+              ) : (
+                <SheetClose asChild>
+                  <Link
+                    href={ROUTES.LOGIN}
+                    className="text-foreground px-5 py-2 hover:text-primary font-medium transition"
+                  >
+                    Log ind
+                  </Link>
+                </SheetClose>
+              )}
+            </nav>
+          </SheetContent>
+        </Sheet>
       </header>
 
       <div className="h-16.5" />
