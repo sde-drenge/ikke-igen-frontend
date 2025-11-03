@@ -27,6 +27,9 @@ export default async function Header() {
           <div className="col-span-8 flex items-center md:col-span-4">
             <Link href="/" className="flex items-center gap-x-3 p-2">
               <Image src="/logo.png" alt="Logo" width={40} height={40} />
+              <span className="text-2xl font-bold text-background">
+                Ikke igen
+              </span>
             </Link>
           </div>
 
