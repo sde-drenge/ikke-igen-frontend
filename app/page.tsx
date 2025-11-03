@@ -1,8 +1,14 @@
 import TriggerFlash from "@/components/trigger-flash";
 import SearchWorkplace from "./components/search-workplace";
 import { Suspense } from "react";
+import { headers } from "next/headers";
+import { mobileCheck } from "@/utils/device";
 
-export default function Home() {
+export default async function Home() {
+  const headersList = await headers();
+
+  const isMobile = mobileCheck(headersList);
+
   return (
     <Suspense fallback={<></>}>
       <div className="min-h-116 border-b bg-accent flex">
@@ -15,7 +21,7 @@ export default function Home() {
             Find, læs og skriv anmeldelser
           </h2>
 
-          <SearchWorkplace />
+          <SearchWorkplace isMobile={isMobile} />
         </div>
       </div>
 
