@@ -36,7 +36,7 @@ export default async function page({ searchParams }: PageProps) {
             className={cn(
               "mb-4 rounded-md overflow-hidden border break-inside-avoid",
               topCategoryUuid === topCategory.uuid &&
-                "shadow-2xl border-2 scale-105"
+                "shadow-2xl border-2 border-primary/20"
             )}
           >
             <div
