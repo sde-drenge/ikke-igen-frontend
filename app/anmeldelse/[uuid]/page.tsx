@@ -41,6 +41,8 @@ export default async function page({ params, searchParams }: PageProps) {
 
   const { star: starColor } = starColors(Number(workplace.stars));
 
+  const topCategory = workplace.categories[0]?.topCategory;
+
   return (
     <div className="max-w-7xl mx-auto py-10 px-6">
       <div>
@@ -75,17 +77,19 @@ export default async function page({ params, searchParams }: PageProps) {
           </div>
         </div>
 
-        <div className="mt-2">
-          <Link
-            href={
-              ROUTES.CATEGORIES +
-              `?topCategoryUuid=${workplace.categories[0].topCategory.uuid}#top-category-${workplace.categories[0].topCategory.uuid}`
-            }
-            className="text-primary font-medium"
-          >
-            {workplace.categories[0].topCategory.name}
-          </Link>
-        </div>
+        {topCategory && (
+          <div className="mt-2">
+            <Link
+              href={
+                ROUTES.CATEGORIES +
+                `?topCategoryUuid=${topCategory.uuid}#top-category-${topCategory.uuid}`
+              }
+              className="text-primary font-medium"
+            >
+              {topCategory.name}
+            </Link>
+          </div>
+        )}
 
         {session?.user.role === "student" && (
           <Link
