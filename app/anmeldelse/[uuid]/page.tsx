@@ -3,7 +3,6 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { safeGet } from "@/lib/api";
 import { ROUTES } from "@/lib/constants/routes";
-import { cn } from "@/lib/utils";
 import { auth } from "@/services/auth";
 import { starColors } from "@/utils/stars";
 import { PenIcon, StarIcon } from "lucide-react";
@@ -63,10 +62,11 @@ export default async function page({ params, searchParams }: PageProps) {
               return (
                 <div
                   key={index}
-                  className={cn(
-                    "size-4 flex items-center justify-center",
-                    index + 1 <= Number(workplace.stars) ? color : "bg-gray-300"
-                  )}
+                  style={{
+                    backgroundColor:
+                      index + 1 <= Number(workplace.stars) ? color : undefined,
+                  }}
+                  className="size-4 flex items-center justify-center bg-gray-300"
                 >
                   <StarIcon color="white" fill="white" className="size-3" />
                 </div>
@@ -92,10 +92,8 @@ export default async function page({ params, searchParams }: PageProps) {
         <div className="">
           <span className="text-2xl font-bold flex items-center gap-2">
             <div
-              className={cn(
-                "size-8 flex items-center justify-center rounded-sm",
-                starColor
-              )}
+              style={{ backgroundColor: starColor }}
+              className="size-8 flex items-center justify-center rounded-sm"
             >
               <StarIcon color="white" fill="white" className="size-5" />
             </div>
@@ -134,14 +132,14 @@ export default async function page({ params, searchParams }: PageProps) {
                     {star} stjerner
                   </Label>
 
-                  <div className="h-3 flex-1 bg-muted rounded-full min-w-36 group">
+                  <div className="h-3 flex-1 bg-muted rounded-full min-w-36">
                     <div
                       style={{ width: `${percentage}%` }}
                       className="bg-foreground h-full rounded-full"
                     />
                   </div>
 
-                  <span className="ml-4 w-8.5 text-right text-sm">
+                  <span className="ml-4 w-10.5 text-right text-sm">
                     {percentage} %
                   </span>
                 </Link>
@@ -176,12 +174,11 @@ export default async function page({ params, searchParams }: PageProps) {
                   return (
                     <div
                       key={index}
-                      className={cn(
-                        "size-4 flex items-center justify-center",
-                        index + 1 <= Number(review.stars)
-                          ? color
-                          : "bg-gray-300"
-                      )}
+                      style={{
+                        backgroundColor:
+                          index + 1 <= Number(review.stars) ? color : undefined,
+                      }}
+                      className="size-4 flex bg-gray-300 items-center justify-center"
                     >
                       <StarIcon color="white" fill="white" className="size-3" />
                     </div>

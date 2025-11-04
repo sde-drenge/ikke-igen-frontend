@@ -1,7 +1,6 @@
 import { Separator } from "@/components/ui/separator";
 import { safeGet } from "@/lib/api";
 import { ROUTES } from "@/lib/constants/routes";
-import { cn } from "@/lib/utils";
 import { starColors } from "@/utils/stars";
 import { StarIcon } from "lucide-react";
 import Link from "next/link";
@@ -63,16 +62,12 @@ export default async function page({ params }: PageProps) {
               </div>
 
               <div
-                className={cn(
-                  "p-1 gap-1 flex rounded-sm items-center",
-                  colors.background
-                )}
+                style={{ backgroundColor: colors.background }}
+                className="p-1 gap-1 flex rounded-sm items-center"
               >
                 <div
-                  className={cn(
-                    "size-4 flex items-center justify-center",
-                    colors.star
-                  )}
+                  style={{ backgroundColor: colors.star }}
+                  className="size-4 flex items-center justify-center"
                 >
                   <StarIcon color="white" fill="white" className="size-3" />
                 </div>

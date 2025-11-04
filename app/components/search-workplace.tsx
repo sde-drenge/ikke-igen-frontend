@@ -162,16 +162,12 @@ export default function SearchWorkplace({ isMobile }: SearchWorkplaceProps) {
                       </div>
 
                       <div
-                        className={cn(
-                          "p-1 gap-1 flex rounded-sm items-center",
-                          colors.background
-                        )}
+                        style={{ backgroundColor: colors.background }}
+                        className="p-1 gap-1 flex rounded-sm items-center"
                       >
                         <div
-                          className={cn(
-                            "size-4 flex items-center justify-center",
-                            colors.star
-                          )}
+                          style={{ backgroundColor: colors.star }}
+                          className="size-4 flex items-center justify-center"
                         >
                           <StarIcon
                             color="white"
@@ -227,16 +223,12 @@ export default function SearchWorkplace({ isMobile }: SearchWorkplaceProps) {
                 </div>
 
                 <div
-                  className={cn(
-                    "p-1 gap-1 flex rounded-sm items-center",
-                    colors.background
-                  )}
+                  style={{ backgroundColor: colors.background }}
+                  className="p-1 gap-1 flex rounded-sm items-center"
                 >
                   <div
-                    className={cn(
-                      "size-4 flex items-center justify-center",
-                      colors.star
-                    )}
+                    style={{ backgroundColor: colors.star }}
+                    className="size-4 flex items-center justify-center"
                   >
                     <StarIcon color="white" fill="white" className="size-3" />
                   </div>

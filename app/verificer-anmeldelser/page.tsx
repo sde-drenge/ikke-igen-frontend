@@ -1,5 +1,4 @@
 import { safeGet } from "@/lib/api";
-import { cn } from "@/lib/utils";
 import { StarIcon } from "lucide-react";
 import ActionButton from "./components/action-button";
 import TriggerFlash from "@/components/trigger-flash";
@@ -57,12 +56,13 @@ export default async function page() {
                     return (
                       <div
                         key={index}
-                        className={cn(
-                          "size-4 flex items-center justify-center",
-                          index + 1 <= Number(review.stars)
-                            ? color
-                            : "bg-gray-300"
-                        )}
+                        style={{
+                          backgroundColor:
+                            index + 1 <= Number(review.stars)
+                              ? color
+                              : undefined,
+                        }}
+                        className="size-4 flex  bg-gray-300 items-center justify-center"
                       >
                         <StarIcon
                           color="white"

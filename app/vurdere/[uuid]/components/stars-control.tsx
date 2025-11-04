@@ -1,7 +1,6 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 import { starColors } from "@/utils/stars";
 import { StarIcon } from "lucide-react";
 import { useState } from "react";
@@ -32,10 +31,8 @@ export default function StarsControl() {
             type="button"
             onClick={() => handleSelectStars(index + 1)}
             onMouseEnter={() => setHoveredStars(index + 1)}
-            className={cn(
-              "size-7 rounded-none bg-gray-300 cursor-pointer",
-              color
-            )}
+            style={{ backgroundColor: color }}
+            className="size-7 rounded-none bg-gray-300 cursor-pointer"
           >
             <StarIcon color="white" fill="white" className="size-4.5" />
           </Button>
