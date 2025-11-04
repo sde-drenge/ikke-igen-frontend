@@ -16,6 +16,7 @@ import { LoginError } from "@/lib/errors";
 import { cookies } from "next/headers";
 import { COOKIES } from "@/lib/constants/cookies";
 import { unstable_update } from "@/services/auth";
+import { uploadFileToS3 } from "@/plugins/form/validation/utils";
 
 export const technicalDataSignupAction = withDecryptionAndValidation(
   technicalDataSignupSchema,
@@ -124,7 +125,10 @@ export const updateProfileSignupAction = withValidation(
       window: 10_000,
     });
 
-    const response = await api.patch<User>("/users/update/", validatedData);
+    const response = await api.patch<User>("/users/update/", {
+      ...validatedData,
+      profilePictureUrl: validatedData.profileImage,
+    });
 
     const user = response.data;
 
@@ -133,6 +137,7 @@ export const updateProfileSignupAction = withValidation(
         name: `${user.firstName} ${user.lastName}`,
         email: user.email,
         isActive: user.isActive,
+        image: user.profilePictureUrl,
         profileColor: user.profileColor,
       },
     });
@@ -141,5 +146,12 @@ export const updateProfileSignupAction = withValidation(
       success: "Din konto er blevet oprettet!",
       status: 200,
     };
+  },
+  {
+    upload: {
+      uploadFields: ["profileImage"],
+      uploadLocation: "profile_images",
+      uploadFileFunction: uploadFileToS3,
+    },
   }
 );

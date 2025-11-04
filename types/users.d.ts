@@ -6,6 +6,7 @@ interface User {
   isActive: boolean;
   phoneNumber: string | null;
   profileColor: string;
+  profilePictureUrl: string | null;
   role: "student" | "teacher" | "teacher-admin";
   createdAt: string;
 }

@@ -1,5 +1,6 @@
 import z from "zod/v3";
 import {
+  blobSchema,
   emailSchema,
   objectIdSchema,
   passwordSchema,
@@ -33,6 +34,7 @@ export const updateProfileSignupSchema = z.object({
     .string()
     .min(1, "Ugyldigt efternavn")
     .max(64, "Kan ikke være længere end 64 tegn"),
+  profileImage: blobSchema(false),
   phoneNumber: z.string().optional(),
   schoolUuid: objectIdSchema,
   education: z.string().min(1, "Påkrævet"),

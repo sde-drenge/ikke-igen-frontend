@@ -1,7 +1,11 @@
 import { RateLimitError } from "@/lib/errors";
 import { auth } from "@/services/auth";
-
+import { randomUUID } from "crypto";
+import { File } from "node:buffer";
 import { ZodSchema, z } from "zod/v3";
+import { s3 } from "@/lib/s3";
+import { PutObjectCommand } from "@aws-sdk/client-s3";
+import { environment } from "@/config/environment";
 
 type ShapedError = {
   status: number;
@@ -20,6 +24,8 @@ export function shapeError(error: unknown): ShapedError {
     status: 500,
     error: "Noget gik galt",
   };
+
+  console.log(error);
 
   if (!error || typeof error !== "object") return defaultError;
 
@@ -108,4 +114,43 @@ export async function validateForm<
     success: true,
     data: parsed.data as SchemaType,
   };
+}
+
+export async function uploadFileToS3(
+  file: File,
+  fieldName: string,
+  location: string
+): Promise<string> {
+  if (!file.type.startsWith("image/")) {
+    throw new Error("Only image files are allowed.");
+  }
+
+  const arrayBuffer = await file.arrayBuffer();
+  const buffer = Buffer.from(arrayBuffer);
+
+  const extension = file.name.split(".").pop() || "webp";
+  const fileName = `${randomUUID()}-${fieldName}.${extension}`;
+
+  const key = `${location}/${fileName}`;
+
+  try {
+    await s3.send(
+      new PutObjectCommand({
+        Bucket: environment.S3_BUCKET,
+        Key: key,
+        Body: buffer,
+        ContentType: file.type || "application/octet-stream",
+        ACL: "public-read",
+      })
+    );
+  } catch (error) {
+    console.log(error);
+  }
+
+  const base = environment.S3_ENDPOINT;
+  const publicUrl = `${base.replace(/\/$/, "")}/${
+    environment.S3_BUCKET
+  }/${encodeURIComponent(key)}`;
+
+  return publicUrl;
 }

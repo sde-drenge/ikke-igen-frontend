@@ -10,6 +10,12 @@ export const environment = createEnv({
     // ─── Auth / JWT ────────────────────────────────────────
     SECRET_KEY: z.string().min(1),
     PRIVATE_KEY_PEM: z.string().min(1),
+
+    // ─── S3 ────────────────────────────────────────
+    S3_ENDPOINT: z.string().url(),
+    S3_ACCESS_KEY: z.string().min(1),
+    S3_SECRET_KEY: z.string().min(1),
+    S3_BUCKET: z.string().min(1),
   },
 
   client: {
@@ -23,6 +29,10 @@ export const environment = createEnv({
     NEXT_PRIVATE_API_URL: process.env.NEXT_PRIVATE_API_URL,
     SECRET_KEY: process.env.SECRET_KEY,
     PRIVATE_KEY_PEM: process.env.PRIVATE_KEY_PEM,
+    S3_ENDPOINT: process.env.S3_ENDPOINT,
+    S3_ACCESS_KEY: process.env.S3_ACCESS_KEY,
+    S3_SECRET_KEY: process.env.S3_SECRET_KEY,
+    S3_BUCKET: process.env.S3_BUCKET,
 
     // Client
     NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,

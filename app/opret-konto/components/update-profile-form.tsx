@@ -4,6 +4,7 @@ import { updateProfileSignupAction } from "../actions";
 import SelectSchool from "./select-school";
 import SelectEducation from "./select-education";
 import { ROUTES } from "@/lib/constants/routes";
+import UploadThenCropControl from "@/plugins/form/controls/upload-then-crop";
 
 export default function UpdateProfileForm() {
   return (
@@ -43,6 +44,13 @@ export default function UpdateProfileForm() {
         <SelectSchool />
 
         <SelectEducation />
+
+        <Control
+          input={UploadThenCropControl}
+          name="profileImage"
+          label="Profilbillede"
+          placeholder="Vælg et profilbillede"
+        />
 
         <Button
           text="Opret"
