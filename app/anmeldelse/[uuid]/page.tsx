@@ -48,8 +48,8 @@ export default async function page({ params, searchParams }: PageProps) {
 
         <span className="font-medium">{workplace.address}</span>
 
-        <div className="flex items-center mt-1">
-          <span className="text-muted-foreground">
+        <div className="flex items-center mt-2">
+          <span className="text-muted-foreground underline">
             Anmeldelser {workplace.amountOfReviews}
           </span>
 
@@ -73,6 +73,18 @@ export default async function page({ params, searchParams }: PageProps) {
               );
             })}
           </div>
+        </div>
+
+        <div className="mt-2">
+          <Link
+            href={
+              ROUTES.CATEGORIES +
+              `?topCategoryUuid=${workplace.categories[0].topCategory.uuid}#top-category-${workplace.categories[0].topCategory.uuid}`
+            }
+            className="text-primary font-medium"
+          >
+            {workplace.categories[0].topCategory.name}
+          </Link>
         </div>
 
         {session?.user.role === "student" && (

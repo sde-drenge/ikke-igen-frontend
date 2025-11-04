@@ -4,13 +4,14 @@ interface Workplace {
   vat: string;
   address: string;
   stars: string;
+  categories: Category[];
   starsProcentages: {
     "1": string;
     "2": string;
     "3": string;
     "4": string;
     "5": string;
-  }
+  };
   amountOfReviews: number;
   createdAt: string;
   updatedAt: string;
@@ -30,4 +31,5 @@ interface TopCategory {
 interface Category {
   uuid: string;
   name: string;
+  topCategory: TopCategory;
 }

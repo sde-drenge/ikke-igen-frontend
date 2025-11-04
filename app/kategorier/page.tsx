@@ -1,14 +1,26 @@
 import { safeGet } from "@/lib/api";
 import { ROUTES } from "@/lib/constants/routes";
+import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-export default async function page() {
-  const { data } = await safeGet<TopCategory[]>("/workplaces/categories/");
+interface PageProps {
+  searchParams: Promise<{
+    topCategoryUuid?: string;
+  }>;
+}
+
+export default async function page({ searchParams }: PageProps) {
+  const [{ data }, awaitedSearchParams] = await Promise.all([
+    safeGet<TopCategory[]>("/workplaces/categories/"),
+    searchParams,
+  ]);
 
   if (!data) {
     return notFound();
   }
+
+  const { topCategoryUuid } = awaitedSearchParams;
 
   return (
     <div className="max-w-7xl mx-auto py-14 px-6">
@@ -20,7 +32,12 @@ export default async function page() {
         {data.map((topCategory) => (
           <div
             key={topCategory.uuid}
-            className="mb-4 rounded-md overflow-hidden border break-inside-avoid"
+            id={"top-category-" + topCategory.uuid}
+            className={cn(
+              "mb-4 rounded-md overflow-hidden border break-inside-avoid",
+              topCategoryUuid === topCategory.uuid &&
+                "shadow-2xl border-2 scale-105"
+            )}
           >
             <div
               style={{ backgroundColor: topCategory.color + "66" }}
